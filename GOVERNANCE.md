@@ -21,6 +21,7 @@ It contains **no implementation**.
 | Reference implementation      | F.2      |
 | Record signing                | F.3      |
 | Invariant metric computation  | Pending: the canonical spec must define `d_KG`, `d_GF`, `d_KF` first |
+| Mathematical definitions, distance functions, rotation-invariant formulas | Pending canonical spec |
 
 ## Relation to Other Repositories
 
@@ -35,10 +36,14 @@ Pi³XI Runtime Contract (derived)     runtime-contract-v1.x
 
 ## Invariant Reservation
 
-In v1 the `invariant` field is reserved. The runtime must pass it through unchanged and must not compute it. Adding invariant semantics (such as SO(2) rotational invariance of `I = (d_KG, d_GF, d_KF)`) requires:
+In v1 the `invariant` field is reserved. Invariant values are treated as opaque, read-only data. Runtime implementations MUST NOT create, modify, normalize, reinterpret, or recalculate invariant values. `1` and `1.0` are distinct values. Adding invariant semantics (such as SO(2) rotational invariance of `I = (d_KG, d_GF, d_KF)`) requires:
 
 1. a canonical spec release that defines the metrics, and
 2. a new runtime contract version that references that spec release.
+
+## Draft Documents
+
+`docs/canonical-record-fixity.md` (Canonical Record Fixity Rules, Draft v0.1) is **non-normative** for `runtime-contract-v1.0`. It collects proposals for F.2 and may only become normative through a new contract version.
 
 ## Lock Levels
 

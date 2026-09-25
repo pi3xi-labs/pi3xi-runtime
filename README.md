@@ -19,7 +19,7 @@ The runtime is organized around the **Canonical Record**, as in the canonical sp
 Canonical Record = { intent, event, observe, meta, invariant }
 ```
 
-The Canonical Record is the **sole exchange format** of the runtime. No other fields are allowed.
+The Canonical Record is the **sole exchange format** of the runtime. No other fields are allowed. It is the immutable audit artifact produced by a runtime.
 
 | Layer     | Spec responsibility (spec-v1.0) | Contract role (v1)                                             |
 |-----------|---------------------------------|----------------------------------------------------------------|
@@ -42,6 +42,8 @@ See [`docs/runtime-model.md`](docs/runtime-model.md).
 
 See [`docs/audit-model.md`](docs/audit-model.md).
 
+Draft (non-normative, targets F.2): [`docs/canonical-record-fixity.md`](docs/canonical-record-fixity.md), Canonical Record Fixity Rules v0.1.
+
 ## Invariant (reserved in v1)
 
 The canonical spec names the Phase 1 invariant vector `I = (d_KG, d_GF, d_KF)` and the protected property SO(2) rotational invariance. The metrics are still "To be specified in a later spec release".
@@ -49,7 +51,7 @@ The canonical spec names the Phase 1 invariant vector `I = (d_KG, d_GF, d_KF)` a
 So in v1 the `invariant` field is **reserved**:
 
 - The value is opaque (any JSON value, including `null`).
-- The runtime must not compute, derive, or alter it.
+- Invariant values are treated as opaque, read-only data. Runtime implementations MUST NOT create, modify, normalize, reinterpret, or recalculate them. `1` and `1.0` are distinct values.
 - The only guarantee is value-identical (byte-identical where carried as bytes) passthrough.
 - This contract does **not** claim that rotation invariance is computed or verified. Those semantics come in a later contract version, once the spec defines the metrics.
 
@@ -75,6 +77,7 @@ examples/                     illustrative only
 docs/
   runtime-model.md
   audit-model.md
+  canonical-record-fixity.md  draft, non-normative (targets F.2)
 releases/
   runtime-contract-v1.0.md
 tools/

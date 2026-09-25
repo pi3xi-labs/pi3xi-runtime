@@ -18,15 +18,15 @@ Checked by `tools/validate_runtime.py` on `examples/replay.json`.
 
 ### G2 — Observation Persistence
 
-Once a Canonical Record is persisted, it is **append-only**. The runtime does not modify or delete it. Corrections are new records, not edits.
+The Canonical Record is the immutable audit artifact produced by a runtime. Once a Canonical Record is persisted, it is **append-only**. The runtime does not modify or delete it. Corrections are new records, not edits.
 
 This cannot be checked from static examples, so it is not machine-checked in v1. It is normative for implementations (F.2). Cryptographic tamper evidence (record signing) is out of scope until F.3.
 
 ### G3 — Invariant Preservation
 
-The `invariant` value of every record is **value-identical** to the invariant value submitted to the runtime. Preservation means non-modification. JSON type, key order, and numeric representation must all be kept (for example `1` must not become `1.0`).
+The `invariant` value of every record is **value-identical** to the invariant value submitted to the runtime. Preservation means non-modification. JSON type, key order, and numeric representation must all be kept (for example `1` must not become `1.0`; `1` and `1.0` are distinct values).
 
-The runtime does not compute or evaluate the invariant (see `docs/runtime-model.md` → Invariant).
+Invariant values are treated as opaque, read-only data. Runtime implementations MUST NOT create, modify, normalize, reinterpret, or recalculate invariant values (see `docs/runtime-model.md` → Invariant).
 
 Checked by `tools/validate_runtime.py`: in every example that provides a `submission`, `record.invariant` must equal `submission.invariant` exactly. The Intent must likewise be recorded as submitted.
 
@@ -39,6 +39,10 @@ Reading the persisted records in `event.sequence` order **reproduces the recorde
 - Two replays of the same persisted stream yield identical records in identical order.
 
 `examples/replay.json` is an illustrative stream. The validator checks its schema conformance and G1 ordering.
+
+## Draft: Fixity Rules for F.2
+
+[`canonical-record-fixity.md`](canonical-record-fixity.md) (Draft v0.1, **non-normative** for runtime-contract-v1.0) proposes stricter byte-level fixity rules for F.2: deterministic serialization and byte-identical replay.
 
 ## Audit Questions a Record Answers
 

@@ -13,6 +13,7 @@ Canonical Record = { intent, event, observe, meta, invariant }
 ```
 
 - It is the **sole exchange format**. The runtime accepts and emits nothing else.
+- It is the **immutable audit artifact** produced by a runtime (guarantee G2).
 - All five fields are required. No additional fields are allowed (`schemas/canonical-record.schema.json`).
 - The canonical spec (spec-v1.0, `runtime/canonical-record.md`) leaves the record structure "To be specified in a later spec release". The structure here is defined at **contract** level for runtime-contract-v1. It does not amend the spec.
 
@@ -71,8 +72,9 @@ Pi³XI invariant layer (spec-v1.0 `invariants/`, `principles/coordinate-invarian
 
 **Reserved in v1.**
 
-- The value is **opaque**: any JSON value, including `null`.
-- The runtime **must not** compute, derive, normalise, reorder, truncate, re-encode, or otherwise alter it.
+- The value is **opaque, read-only** data: any JSON value, including `null`.
+- Runtime implementations **MUST NOT** create, modify, normalize, reinterpret, or recalculate invariant values. They also must not reorder, truncate, or re-encode them.
+- `1` and `1.0` are distinct values.
 - The runtime guarantees only **value-identical passthrough** (byte-identical where carried as bytes). Preservation means non-modification.
 - The runtime makes **no claim** that SO(2) rotational invariance, or any property of `I = (d_KG, d_GF, d_KF)`, has been computed or verified.
 

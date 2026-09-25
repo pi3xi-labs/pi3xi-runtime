@@ -30,6 +30,7 @@
     }
   ],
   "canonical_record": {
+    "description": "Canonical Record is the immutable audit artifact produced by a runtime.",
     "schema": "schemas/canonical-record.schema.json",
     "fields": [
       "intent",
@@ -39,7 +40,8 @@
       "invariant"
     ],
     "sole_exchange_format": true,
-    "additional_fields": "forbidden"
+    "additional_fields": "forbidden",
+    "immutable": true
   },
   "layers": [
     {
@@ -124,12 +126,14 @@
   ],
   "invariant_rules": {
     "status": "reserved",
-    "value": "opaque; any JSON value including null",
+    "value": "opaque, read-only; any JSON value including null",
     "rules": [
+      "Invariant values are treated as opaque, read-only data. Runtime implementations MUST NOT create, modify, normalize, reinterpret, or recalculate invariant values.",
       "The runtime MUST NOT compute the invariant value.",
       "The runtime MUST NOT alter, normalise, reorder, truncate, or re-encode the invariant value.",
       "The runtime MUST pass the invariant value through value-identically; where the value is carried as bytes, byte-identically.",
-      "The runtime MUST NOT claim that SO(2) rotational invariance, or any property of I = (d_KG, d_GF, d_KF), has been computed or verified."
+      "The runtime MUST NOT claim that SO(2) rotational invariance, or any property of I = (d_KG, d_GF, d_KF), has been computed or verified.",
+      "1 and 1.0 are distinct values; converting one into the other is a modification."
     ],
     "deferred": "The metrics d_KG, d_GF, d_KF are 'To be specified in a later spec release' in spec-v1.0. Rotation-invariance semantics will be added in a later contract version once the canonical spec defines them."
   },
@@ -142,6 +146,13 @@
   "out_of_scope": [
     "Record signing (Phase F.3)",
     "Reference implementation (Phase F.2)",
-    "Invariant metric computation (pending canonical spec)"
+    "Invariant metric computation (pending canonical spec)",
+    "Mathematical definitions, distance functions, and rotation-invariant formulas (pending canonical spec)"
+  ],
+  "drafts": [
+    {
+      "file": "docs/canonical-record-fixity.md",
+      "status": "non-normative draft for F.2"
+    }
   ]
 }

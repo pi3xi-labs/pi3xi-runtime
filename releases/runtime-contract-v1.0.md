@@ -2,42 +2,55 @@
 
 > Release notes draft. Not yet tagged.
 
-## Summary
+## Position
 
-First runtime contract of the Pi³XI architecture (Phase F.1). It defines the runtime as an Observation Engine: what is observed, recorded, and guaranteed, never why.
+This release defines the Runtime Observation Contract v1.
 
-- Canonical spec: `pi3xi-labs/pi3xi-canonical-spec` `spec-v1.0` @ `93656646fcf1aab3ef316a557b23885d66ebe30f`
-- Lock enforced by CI in this repository: Structure
+This contract specifies how observation records are exchanged and validated.
+
+It is a **contract**, not a reference implementation.
+
+## Scope
+
+Included:
+
+- Runtime Contract v1 (`contracts/runtime-contract-v1.json`)
+- Schemas (6, JSON Schema draft 2020-12): intent, event, observe, meta, invariant, canonical-record
+- Validation Rules: layer rules and guarantees G1 event ordering, G2 observation persistence, G3 invariant preservation, G4 audit replay
 - Canonical Record: `{ intent, event, observe, meta, invariant }`, the sole exchange format
-- Guarantees: G1 event ordering, G2 observation persistence, G3 invariant preservation, G4 audit replay
-- Invariant field: **reserved**. Opaque, passthrough only. No rotation-invariance claim until the spec defines `d_KG`, `d_GF`, `d_KF`.
+- Examples (illustrative): success, failure, replay
+- Validator (`tools/validate_runtime.py`) and CI (`runtime-check`)
 
-## Out of Scope
+## Non-goals
 
+Not included:
+
+- Invariant computation
+- Mathematical definitions
+- Distance functions
+- Rotation-invariant formulas
 - Reference implementation (F.2)
 - Record signing (F.3)
 
-## Files
+## Invariant
 
-- `README.md`
-- `GOVERNANCE.md`
-- `LICENSE`
-- `contracts/runtime-contract-v1.json`
-- `schemas/intent.schema.json`
-- `schemas/event.schema.json`
-- `schemas/observe.schema.json`
-- `schemas/meta.schema.json`
-- `schemas/invariant.schema.json`
-- `schemas/canonical-record.schema.json`
-- `examples/verify-success.json` (illustrative)
-- `examples/verify-fail.json` (illustrative)
-- `examples/replay.json` (illustrative)
-- `docs/runtime-model.md`
-- `docs/audit-model.md`
-- `releases/runtime-contract-v1.0.md`
-- `tools/validate_runtime.py`
-- `.github/workflows/runtime-check.yml`
+Invariant values are treated as opaque, read-only data. Runtime implementations MUST NOT create, modify, normalize, reinterpret, or recalculate invariant values.
 
-## License
+1 and 1.0 are distinct values.
 
-CC0 1.0 Universal
+## Canonical Record
+
+Canonical Record is the immutable audit artifact produced by a runtime.
+
+## Relation to the Canonical Spec
+
+Derived from `pi3xi-labs/pi3xi-canonical-spec` `spec-v1.0` @ `93656646fcf1aab3ef316a557b23885d66ebe30f`. The Canonical Record structure and the Invariant layer are contract-level choices. They are not amendments to spec-v1.0.
+
+## Verification
+
+- CI: `runtime-check` (Structure Lock), which runs `python tools/validate_runtime.py`
+- Negative self-test: `python tools/validate_runtime.py --self-test`. It checks that 15 mutated inputs are rejected and that the 2 unmutated examples are accepted.
+
+## Future
+
+Future specifications MAY define mathematical invariant systems and replay models.
