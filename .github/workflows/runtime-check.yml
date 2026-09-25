@@ -1,0 +1,46 @@
+name: runtime-check
+
+on:
+  push:
+  pull_request:
+
+permissions: {}
+
+jobs:
+  runtime-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install "jsonschema==4.26.0"
+
+      - name: Validate Runtime Contract
+        run: python tools/validate_runtime.py
+
+      - name: Negative Self-Tests
+        run: python tools/validate_runtime.py --self-test
+
+      - name: Verify Tag Format
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if [[ "$TAG" =~ ^runtime-contract-v[0-9]+\.[0-9]+$ ]]; then
+            echo "PASS: tag format valid: $TAG"
+          else
+            echo "FAIL: tag '$TAG' does not match ^runtime-contract-v[0-9]+\.[0-9]+$"
+            exit 1
+          fi
