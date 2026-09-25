@@ -19,14 +19,18 @@ Byte-level fixity checks for Pi³XI Canonical Records defined by F.1 (`runtime-c
 
 ```
 audit-package/
+  rfc/         RFC-AUDIT-001.md (Distributed Runtime Compatibility, Draft)
+  docs/        responsibility-boundary.md (F.1 / F.2 boundary, Mermaid diagram)
   spec/        canonical-serialization-v1.md, fixity-rules-v0.2.md, audit-model-v0.2.md,
                rejection-reasons.md, rejection-reasons.json (registry)
   schemas/     rejection-reason.schema.json, negative-fixture.schema.json
   src/pi3xi_audit/  errors.py, canonical.py, verify.py, fixtures.py
-  tools/       audit.py, generate_success_fixtures.py, generate_negative_cases.py, generate_test_vectors.py
-  fixtures/    success/ (4), baseline/ (1), failure/ (27 x NEG-XXX), vectors/vectors.json
+  tools/       audit.py, verify_hashes.py, build_audit_package.py,
+               generate_success_fixtures.py, generate_negative_cases.py, generate_test_vectors.py
+  fixtures/    success/ (4), baseline/ (1), failure/ (27 x NEG-XXX),
+               vectors/ (27 raw TV-XXX.json + .sha256, vectors.json index)
   tests/       pytest suite
-  matrices/    5 control matrices (CSV) + README.md
+  matrices/    5 control matrices + compatibility-matrix.csv + README.md
 ```
 
 ## Run Locally
@@ -42,16 +46,20 @@ python tools/generate_negative_cases.py
 python tools/generate_test_vectors.py
 git diff --exit-code -- . && test -z "$(git status --porcelain -- .)"
 
+python tools/verify_hashes.py
 pytest --junitxml=reports/pytest.xml
 python tools/audit.py --reports-dir reports
+python tools/build_audit_package.py --out audit-package-v0.1.zip --reports-dir reports
 ```
 
 Expected output:
 
 - `generate_negative_cases.py` prints `NEG-001 OK …` through `NEG-027 OK …` and `27 negative case(s) generated`.
 - `pytest` reports all tests passed.
-- `tools/audit.py` prints `SUMMARY positives=5 negatives=27 vectors=10 comparisons=10 failures=0 result=PASS` and writes `reports/hash.log`, `reports/replay.log`, and `reports/audit.log`.
-- `reports/` is not committed (`.gitignore`). CI uploads it as an artifact.
+- `tools/audit.py` prints `SUMMARY positives=5 negatives=27 vectors=27 comparisons=10 failures=0 result=PASS` and writes `reports/hash.log`, `reports/replay.log`, and `reports/audit.log`.
+- `tools/verify_hashes.py` prints `32 sidecar pair(s), 27 index entr(ies) checked, 0 failure(s)`.
+- `reports/` and `audit-package-v0.1.zip` are not committed (`.gitignore`). CI uploads both as an artifact.
+- The ZIP is deterministic: files are sorted, every timestamp is 1980-01-01 00:00:00, and permissions are 0644. It contains `README.md`, `rfc/`, `spec/`, `schemas/`, `matrices/`, `fixtures/`, `docs/`, and `reports/`.
 
 ## Key Decisions (Locked)
 
@@ -62,6 +70,12 @@ Expected output:
 - **Hash placement:** `<name>.json.sha256`, containing 64 lowercase hex characters and one LF (65 bytes). There is no hash field inside records.
 - **Replay:** re-read the stored bytes, then compare byte-for-byte and by SHA-256.
 - **Version fields:** `contract_version`, `schema_version`, and `record_version` are not in v1 records. They are described as a future record format only.
+
+## Compatibility
+
+`rfc/RFC-AUDIT-001.md` defines levels L0 Schema, L1 Validation, L2 Replay, and L3 Identity. This Python reference targets L3 plus L1.
+
+`matrices/compatibility-matrix.csv` tracks each runtime's column. Only Python has results. Rust, Node, and Go are `Not implemented`, and `tests/test_compatibility_matrix.py` forbids claiming anything else for them.
 
 ## Examples Are Illustrative
 
