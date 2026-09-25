@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/intent.schema.json",
+  "title": "Intent",
+  "description": "Intent layer (spec-v1.0: 'Desired action'). A recorded request. An Intent is an observation target, not a fact: recording an Intent asserts only that the request was received, not that it was carried out or succeeded.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Identifier of this Intent, unique within the record stream.",
+      "type": "string",
+      "minLength": 1
+    },
+    "action": {
+      "description": "Name of the requested action, as submitted.",
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "description": "What the requested action is directed at, as submitted.",
+      "type": "string",
+      "minLength": 1
+    },
+    "parameters": {
+      "description": "Request parameters, as submitted. Recorded verbatim; the runtime does not interpret them.",
+      "type": "object"
+    }
+  },
+  "required": ["id", "action"],
+  "additionalProperties": false
+}

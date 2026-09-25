@@ -1,0 +1,147 @@
+{
+  "contract": "pi3xi-runtime-contract",
+  "version": "1.0",
+  "tag": "runtime-contract-v1.0",
+  "tag_format": "^runtime-contract-v[0-9]+\\.[0-9]+$",
+  "status": "draft",
+  "phase": "F.1",
+  "definition": "The runtime is an Observation Engine. This contract states only what is observed, recorded, and guaranteed. It never states why.",
+  "spec_reference": {
+    "repository": "https://github.com/pi3xi-labs/pi3xi-canonical-spec",
+    "tag": "spec-v1.0",
+    "commit": "93656646fcf1aab3ef316a557b23885d66ebe30f",
+    "files": [
+      "runtime/canonical-record.md",
+      "runtime/intent-event-observe-meta.md",
+      "runtime/observation-interface.md",
+      "principles/observation-first.md",
+      "principles/responsibility-boundaries.md",
+      "principles/coordinate-invariant.md",
+      "invariants/phase1-invariants.md",
+      "invariants/metric-definitions.md"
+    ],
+    "relation": "derived; this contract must not contradict the canonical spec"
+  },
+  "related_contracts": [
+    {
+      "repository": "https://github.com/pi3xi-labs/sentinel-observation-contract",
+      "tag": "contracts-v1.4",
+      "relation": "illustrative example scenario only (Sigstore verification); no normative dependency"
+    }
+  ],
+  "canonical_record": {
+    "schema": "schemas/canonical-record.schema.json",
+    "fields": [
+      "intent",
+      "event",
+      "observe",
+      "meta",
+      "invariant"
+    ],
+    "sole_exchange_format": true,
+    "additional_fields": "forbidden"
+  },
+  "layers": [
+    {
+      "name": "Intent",
+      "field": "intent",
+      "schema": "schemas/intent.schema.json",
+      "spec_responsibility": "Desired action",
+      "rules": [
+        "An Intent is a recorded request: an observation target, not a fact.",
+        "Recording an Intent asserts only that the request was received.",
+        "The Intent is recorded as submitted; the runtime does not interpret or rewrite it."
+      ]
+    },
+    {
+      "name": "Event",
+      "field": "event",
+      "schema": "schemas/event.schema.json",
+      "spec_responsibility": "State transition",
+      "rules": [
+        "An Event records that an occurrence took place and when.",
+        "No inference: an Event carries no cause, reason, or interpretation.",
+        "event.intent_ref, when present, equals intent.id of the same record."
+      ]
+    },
+    {
+      "name": "Observe",
+      "field": "observe",
+      "schema": "schemas/observe.schema.json",
+      "spec_responsibility": "Observable result",
+      "rules": [
+        "Observation First: record observations, not explanations.",
+        "observe.event_ref equals event.id of the same record.",
+        "observe.observed_at is not earlier than event.occurred_at."
+      ]
+    },
+    {
+      "name": "Meta",
+      "field": "meta",
+      "schema": "schemas/meta.schema.json",
+      "spec_responsibility": "Audit and governance metadata",
+      "rules": [
+        "Meta carries auxiliary audit data (record_id, timestamp, runtime_version, contract, spec).",
+        "Meta never carries observation content.",
+        "meta.timestamp is not earlier than observe.observed_at."
+      ]
+    },
+    {
+      "name": "Invariant",
+      "field": "invariant",
+      "schema": "schemas/invariant.schema.json",
+      "spec_responsibility": "Pi³XI invariant layer (spec-v1.0 invariants/)",
+      "rules": [
+        "RESERVED in v1. See invariant_rules."
+      ]
+    }
+  ],
+  "guarantees": [
+    {
+      "id": "G1",
+      "name": "event_ordering",
+      "statement": "Within a record stream, event.sequence is strictly increasing, and event.occurred_at and meta.timestamp are non-decreasing in sequence order.",
+      "checked_by": "tools/validate_runtime.py (examples/replay.json)"
+    },
+    {
+      "id": "G2",
+      "name": "observation_persistence",
+      "statement": "Once persisted, a Canonical Record is append-only: the runtime does not modify or delete it.",
+      "checked_by": "not machine-checkable from static examples in v1; normative for implementations (F.2)"
+    },
+    {
+      "id": "G3",
+      "name": "invariant_preservation",
+      "statement": "The invariant field of every Canonical Record is value-identical to the invariant value submitted to the runtime (preservation = non-modification).",
+      "checked_by": "tools/validate_runtime.py (submission vs record in examples)"
+    },
+    {
+      "id": "G4",
+      "name": "audit_replay",
+      "statement": "Reading the persisted records in event.sequence order reproduces the recorded history unchanged. Replay reads records; it does not re-execute Intents or re-interpret observations.",
+      "checked_by": "tools/validate_runtime.py (examples/replay.json ordering and schema conformance)"
+    }
+  ],
+  "invariant_rules": {
+    "status": "reserved",
+    "value": "opaque; any JSON value including null",
+    "rules": [
+      "The runtime MUST NOT compute the invariant value.",
+      "The runtime MUST NOT alter, normalise, reorder, truncate, or re-encode the invariant value.",
+      "The runtime MUST pass the invariant value through value-identically; where the value is carried as bytes, byte-identically.",
+      "The runtime MUST NOT claim that SO(2) rotational invariance, or any property of I = (d_KG, d_GF, d_KF), has been computed or verified."
+    ],
+    "deferred": "The metrics d_KG, d_GF, d_KF are 'To be specified in a later spec release' in spec-v1.0. Rotation-invariance semantics will be added in a later contract version once the canonical spec defines them."
+  },
+  "examples": [
+    "examples/verify-success.json",
+    "examples/verify-fail.json",
+    "examples/replay.json"
+  ],
+  "examples_status": "illustrative",
+  "out_of_scope": [
+    "Record signing (Phase F.3)",
+    "Reference implementation (Phase F.2)",
+    "Invariant metric computation (pending canonical spec)"
+  ]
+}

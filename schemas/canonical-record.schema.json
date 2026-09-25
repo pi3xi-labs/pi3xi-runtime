@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/canonical-record.schema.json",
+  "title": "Canonical Record",
+  "description": "The Canonical Record: the sole exchange format of the runtime. Exactly five fields: intent, event, observe, meta, invariant. States only what was observed, recorded, and guaranteed, never why.",
+  "type": "object",
+  "properties": {
+    "intent": { "$ref": "intent.schema.json" },
+    "event": { "$ref": "event.schema.json" },
+    "observe": { "$ref": "observe.schema.json" },
+    "meta": { "$ref": "meta.schema.json" },
+    "invariant": { "$ref": "invariant.schema.json" }
+  },
+  "required": ["intent", "event", "observe", "meta", "invariant"],
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/observe.schema.json",
+  "title": "Observe",
+  "description": "Observe layer (spec-v1.0: 'Observable result'). The observation result, recorded under Observation First: record observations, not explanations. There is deliberately no field for reasons, interpretations, or explanations; additionalProperties is false so that none can be added.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Identifier of this observation, unique within the record stream.",
+      "type": "string",
+      "minLength": 1
+    },
+    "event_ref": {
+      "description": "Id of the Event that was observed. Within a Canonical Record it must equal event.id.",
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "description": "Time the observation was taken (RFC 3339, UTC 'Z' suffix). Not earlier than event.occurred_at.",
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "result": {
+      "description": "Observed result as captured (e.g. a tool's literal output line). Not an interpretation.",
+      "type": "string"
+    },
+    "outputs": {
+      "description": "Additional observed values as captured (e.g. exit status). Recorded verbatim.",
+      "type": "object"
+    }
+  },
+  "required": ["id", "event_ref", "observed_at", "result"],
+  "additionalProperties": false
+}

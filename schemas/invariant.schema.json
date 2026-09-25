@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/invariant.schema.json",
+  "title": "Invariant (RESERVED in runtime-contract-v1)",
+  "description": "Invariant layer (Pi³XI). RESERVED in v1. The canonical spec (spec-v1.0) names the Phase 1 invariant vector I = (d_KG, d_GF, d_KF) and the protected property SO(2) rotational invariance, but the metrics are 'To be specified in a later spec release'. This contract therefore defines no structure for the value: it is opaque. Any JSON value (including null) is accepted. The runtime MUST NOT compute, derive, normalise, reorder, or otherwise alter it; the only guarantee is value-identical passthrough (preservation = non-modification). Rotation-invariance semantics are deferred to a later contract version, after the spec defines the metrics.",
+  "$comment": "Intentionally unconstrained. Do not add structure here until the canonical spec defines d_KG, d_GF, d_KF."
+}

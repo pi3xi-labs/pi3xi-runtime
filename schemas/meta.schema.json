@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/meta.schema.json",
+  "title": "Meta",
+  "description": "Meta layer (spec-v1.0: 'Audit and governance metadata'). Auxiliary audit data about the record itself. Meta never carries observation content.",
+  "type": "object",
+  "properties": {
+    "record_id": {
+      "description": "Identifier of this Canonical Record, unique within the record stream.",
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp": {
+      "description": "Time the record was persisted (RFC 3339, UTC 'Z' suffix). Non-decreasing across the stream in sequence order; not earlier than observe.observed_at.",
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "runtime_version": {
+      "description": "Version string of the runtime that produced the record.",
+      "type": "string",
+      "minLength": 1
+    },
+    "contract": {
+      "description": "Runtime contract tag the record conforms to.",
+      "type": "string",
+      "pattern": "^runtime-contract-v[0-9]+\\.[0-9]+$"
+    },
+    "spec": {
+      "description": "Canonical spec release the contract derives from.",
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "pattern": "^spec-v[0-9]+\\.[0-9]+$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        }
+      },
+      "required": ["tag", "commit"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["record_id", "timestamp", "runtime_version", "contract"],
+  "additionalProperties": false
+}

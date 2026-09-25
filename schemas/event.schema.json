@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/schemas/event.schema.json",
+  "title": "Event",
+  "description": "Event layer (spec-v1.0: 'State transition'). A record that an occurrence took place. No inference: an Event records what occurred and when, never why.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Identifier of this Event, unique within the record stream.",
+      "type": "string",
+      "minLength": 1
+    },
+    "sequence": {
+      "description": "Position of this Event in the record stream. Strictly increasing across the stream (guarantee G1: event ordering).",
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "description": "Kind of occurrence, e.g. 'execution.completed'.",
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "description": "Time of the occurrence (RFC 3339, UTC 'Z' suffix). Non-decreasing across the stream in sequence order.",
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "intent_ref": {
+      "description": "Id of the Intent this Event occurred for, if any. Within a Canonical Record it must equal intent.id.",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": ["id", "sequence", "type", "occurred_at"],
+  "additionalProperties": false
+}
