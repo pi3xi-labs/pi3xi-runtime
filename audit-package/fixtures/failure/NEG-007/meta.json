@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-007",
+  "stage": "format",
+  "expected_reason": "NON_CANONICAL_WHITESPACE",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "034483217a8ffed5d8aec7d8a1f6f620cbf5fd1f7b46ec87cb2ebce5cc86eacb",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Insert one space after the first ':' (after \"intent\")."
+  }
+}

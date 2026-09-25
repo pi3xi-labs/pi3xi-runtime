@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-025",
+  "stage": "baseline",
+  "expected_reason": "NUMERIC_REPRESENTATION_CHANGE",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "44379e5233227755890b56f8bdaa80bf24ff9b5440f6da7196571d52a8055900",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace the number 1 in invariant with 1.0."
+  }
+}

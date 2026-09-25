@@ -1,0 +1,186 @@
+[
+  {
+    "code": "INVALID_UTF8",
+    "precedence": 1,
+    "stage": "format",
+    "category": "encoding",
+    "status": "active",
+    "description": "The file bytes are not valid UTF-8."
+  },
+  {
+    "code": "BOM_PRESENT",
+    "precedence": 2,
+    "stage": "format",
+    "category": "encoding",
+    "status": "active",
+    "description": "The file starts with a UTF-8 byte order mark (EF BB BF)."
+  },
+  {
+    "code": "INVALID_JSON",
+    "precedence": 3,
+    "stage": "format",
+    "category": "syntax",
+    "status": "active",
+    "description": "The bytes do not form exactly one syntactically valid JSON value (RFC 8259) at the start of the file."
+  },
+  {
+    "code": "MISSING_FINAL_LF",
+    "precedence": 4,
+    "stage": "format",
+    "category": "termination",
+    "status": "active",
+    "description": "The top-level JSON value is not followed by any byte: the single terminating LF (0x0A) is missing."
+  },
+  {
+    "code": "TRAILING_DATA",
+    "precedence": 5,
+    "stage": "format",
+    "category": "termination",
+    "status": "active",
+    "description": "The top-level JSON value is followed by something other than exactly one LF (e.g. a second LF, CRLF, a space, or other data)."
+  },
+  {
+    "code": "NON_CANONICAL_WHITESPACE",
+    "precedence": 6,
+    "stage": "format",
+    "category": "whitespace",
+    "status": "active",
+    "description": "Insignificant whitespace (space, tab, CR, LF) occurs outside string literals before or inside the top-level value."
+  },
+  {
+    "code": "DUPLICATE_KEY",
+    "precedence": 7,
+    "stage": "format",
+    "category": "syntax",
+    "status": "active",
+    "description": "An object at any depth contains the same member name more than once (compared after unescaping)."
+  },
+  {
+    "code": "INVARIANT_REMOVED",
+    "precedence": 8,
+    "stage": "format",
+    "category": "invariant",
+    "status": "active",
+    "description": "The top-level 'invariant' member is absent."
+  },
+  {
+    "code": "MISSING_REQUIRED_FIELD",
+    "precedence": 9,
+    "stage": "format",
+    "category": "structure",
+    "status": "active",
+    "description": "A top-level member other than 'invariant' (intent, event, observe, meta) is absent."
+  },
+  {
+    "code": "UNEXPECTED_FIELD",
+    "precedence": 10,
+    "stage": "format",
+    "category": "structure",
+    "status": "active",
+    "description": "The top-level object contains a member not in {intent, event, observe, meta, invariant}."
+  },
+  {
+    "code": "FIELD_ORDER_VIOLATION",
+    "precedence": 11,
+    "stage": "format",
+    "category": "structure",
+    "status": "active",
+    "description": "The top-level members are exactly the required set but not in the order intent, event, observe, meta, invariant."
+  },
+  {
+    "code": "TYPE_MISMATCH",
+    "precedence": 12,
+    "stage": "format",
+    "category": "structure",
+    "status": "active",
+    "description": "The record violates the F.1 structural schema (schemas/canonical-record.schema.json) in any way not covered by the codes above, including a top-level value that is not an object."
+  },
+  {
+    "code": "HASH_FILE_MISSING",
+    "precedence": 13,
+    "stage": "hash",
+    "category": "integrity",
+    "status": "active",
+    "description": "The '<name>.json.sha256' sidecar does not exist."
+  },
+  {
+    "code": "HASH_FORMAT_INVALID",
+    "precedence": 14,
+    "stage": "hash",
+    "category": "integrity",
+    "status": "active",
+    "description": "The sidecar is not exactly 64 lowercase hexadecimal characters followed by one LF (65 bytes)."
+  },
+  {
+    "code": "HASH_MISMATCH",
+    "precedence": 15,
+    "stage": "hash",
+    "category": "integrity",
+    "status": "active",
+    "description": "The sidecar digest differs from the SHA-256 of the record file bytes."
+  },
+  {
+    "code": "INTENT_MODIFIED",
+    "precedence": 16,
+    "stage": "baseline",
+    "category": "modification",
+    "status": "active",
+    "description": "The first differing top-level section versus the reference is 'intent'."
+  },
+  {
+    "code": "EVENT_MODIFIED",
+    "precedence": 17,
+    "stage": "baseline",
+    "category": "modification",
+    "status": "active",
+    "description": "The first differing top-level section versus the reference is 'event'."
+  },
+  {
+    "code": "OBSERVE_MODIFIED",
+    "precedence": 18,
+    "stage": "baseline",
+    "category": "modification",
+    "status": "active",
+    "description": "The first differing top-level section versus the reference is 'observe'."
+  },
+  {
+    "code": "META_MODIFIED",
+    "precedence": 19,
+    "stage": "baseline",
+    "category": "modification",
+    "status": "active",
+    "description": "The first differing top-level section versus the reference is 'meta'."
+  },
+  {
+    "code": "INVARIANT_TYPE_CHANGED",
+    "precedence": 20,
+    "stage": "baseline",
+    "category": "invariant",
+    "status": "active",
+    "description": "The first differing section is 'invariant' and the JSON type of its value changed (object, array, string, number, boolean, null)."
+  },
+  {
+    "code": "INVARIANT_VALUE_CHANGED",
+    "precedence": 21,
+    "stage": "baseline",
+    "category": "invariant",
+    "status": "active",
+    "description": "The first differing section is 'invariant', its JSON type is unchanged, and it differs other than only by numeric lexical form."
+  },
+  {
+    "code": "NUMERIC_REPRESENTATION_CHANGE",
+    "precedence": 22,
+    "stage": "baseline",
+    "category": "numeric",
+    "status": "active",
+    "description": "The first differing section differs only in the lexical form of one or more numbers whose numeric values are equal (e.g. 1 vs 1.0 vs 1e0)."
+  },
+  {
+    "code": "UNSUPPORTED_SCHEMA_VERSION",
+    "precedence": 23,
+    "stage": "reserved",
+    "category": "versioning",
+    "status": "reserved",
+    "description": "Reserved for a future record format carrying version fields. Not emitted in v0.1."
+  }
+]

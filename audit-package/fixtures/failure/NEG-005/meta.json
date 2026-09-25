@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-005",
+  "stage": "format",
+  "expected_reason": "TRAILING_DATA",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "e47acfeeb8909f2f79a6bec2632e4f7bcce98375031b72032ee7b9183cfac988",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Append a second LF after the terminating LF."
+  }
+}

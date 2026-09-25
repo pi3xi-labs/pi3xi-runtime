@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-020",
+  "stage": "baseline",
+  "expected_reason": "EVENT_MODIFIED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "3f31f70538a2ef1313777112fc82d7ce6ee6a15b4b7f0acee0a2a5a7e9b7d836",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace event.sequence 3 with 4."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-006",
+  "stage": "format",
+  "expected_reason": "TRAILING_DATA",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "eeb5a7228272049ad9bfde5406dd028b79ea0f07543379245671a8cbc94d4bd6",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Insert CR before the terminating LF (CRLF line ending)."
+  }
+}

@@ -1,0 +1,17 @@
+ID,Category,Control,Description,ExpectedResult,ObservedResult,Owner,Evidence,RiskLevel,Status,LastVerified,Notes
+A-01,Record,Byte identity,SHA-256 of the saved record bytes equals the recorded digest.,PASS,,Maintainer,,Critical,Planned,,Maps to REC-001 / HSH-001.
+A-02,Record,Numeric identity change,Invariant number changes only in lexical form (1 vs 1.0 vs 1e0).,FAIL,,Maintainer,,Critical,Planned,,FAIL means the audit rejects (NUMERIC_REPRESENTATION_CHANGE). Maps to INV-004.
+A-03,Record,Required field removal,A required top-level member is removed.,FAIL,,Maintainer,,High,Planned,,FAIL means the audit rejects (MISSING_REQUIRED_FIELD / INVARIANT_REMOVED).
+A-04,Record,Unexpected fields,An extra top-level member is added.,FAIL,,Maintainer,,Medium,Planned,,FAIL means the audit rejects (UNEXPECTED_FIELD).
+B-01,Replay,Replay byte equality,Replayed bytes equal the stored bytes.,PASS,,Maintainer,,Critical,Planned,,Maps to RPL-001.
+B-02,Replay,Replay hash equality,SHA-256 of the replayed bytes equals the stored digest and the sidecar.,PASS,,Maintainer,,Critical,Planned,,Maps to RPL-002.
+C-01,Invariant,Invariant value change,Invariant value differs from the reference.,FAIL,,Maintainer,,Critical,Planned,,FAIL means the audit rejects (INVARIANT_VALUE_CHANGED). Maps to INV-001.
+C-02,Invariant,Invariant type change,Invariant JSON type differs from the reference.,FAIL,,Maintainer,,Critical,Planned,,FAIL means the audit rejects (INVARIANT_TYPE_CHANGED). Maps to INV-003.
+D-01,Hash,Sidecar match,Sidecar holds the SHA-256 of the record bytes in the exact format.,PASS,,Maintainer,,Critical,Planned,,Maps to HSH-001 / HSH-002.
+D-02,Hash,Sidecar mismatch,Sidecar digest does not match the record bytes.,FAIL,,Maintainer,,Critical,Planned,,FAIL means the audit rejects (HASH_MISMATCH).
+E-01,Release,Fresh clone verification,A fresh clone of the release commit passes the full audit.,PASS,,Maintainer,,High,Planned,,Maps to REL-005.
+E-02,Release,Tag verification,The release tag resolves to the audited commit.,PASS,,Maintainer,,High,Planned,,Maps to REL-006.
+X-01,Compatibility,Python runtime,Python reference implementation gives the expected audit results.,PASS,,Maintainer,,High,Planned,,See compatibility-matrix.csv.
+X-02,Compatibility,Rust runtime,No Rust implementation exists in this repository.,Not implemented,,Maintainer,,Low,Planned,,Never PASS without an implementation and CI evidence.
+X-03,Compatibility,Node runtime,No Node implementation exists in this repository.,Not implemented,,Maintainer,,Low,Planned,,Never PASS without an implementation and CI evidence.
+X-04,Compatibility,Go runtime,No Go implementation exists in this repository.,Not implemented,,Maintainer,,Low,Planned,,Never PASS without an implementation and CI evidence.

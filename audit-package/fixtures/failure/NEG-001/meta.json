@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-001",
+  "stage": "format",
+  "expected_reason": "INVALID_UTF8",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json.hex",
+  "record_encoding": "hex",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "a3b08ada55861c2b21282b59cd9519b66069bcb70d5aece57ebcb92009b93de3",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Insert byte 0xFF inside the string \"illustrative\" in invariant."
+  }
+}

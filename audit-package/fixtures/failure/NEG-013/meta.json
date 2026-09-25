@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-013",
+  "stage": "format",
+  "expected_reason": "TYPE_MISMATCH",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "0cc6f3a69e9130df2a68d63f98e29fe14519f72b309ecef723e3acc333c22bdf",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace event.sequence 3 with the string \"3\"."
+  }
+}

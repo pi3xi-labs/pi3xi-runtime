@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-008",
+  "stage": "format",
+  "expected_reason": "DUPLICATE_KEY",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "89bd9999c94f497e24a1366e2229cc6fadac65e7dfebb59cbd64ea9c3f064bc0",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Duplicate the member \"target\":\"contracts-v1.4.json\" inside intent."
+  }
+}

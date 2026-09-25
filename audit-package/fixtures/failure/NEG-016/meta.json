@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-016",
+  "stage": "hash",
+  "expected_reason": "HASH_FORMAT_INVALID",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "555fa8730836dcac92cdd0467d8ebdba5d2efc7d4b16e58f35f46b0bd1487999",
+  "mutation": {
+    "target": "sidecar",
+    "operation": "insert",
+    "description": "Append '  record.json' (sha256sum style) before the sidecar LF."
+  }
+}

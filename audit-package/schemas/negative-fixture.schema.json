@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/audit-package/schemas/negative-fixture.schema.json",
+  "title": "Negative Fixture Metadata (F.2 Audit Package v0.1)",
+  "description": "meta.json of a negative fixture fixtures/failure/NEG-XXX/. Each fixture is exactly one mutation of the baseline record bytes, or of the baseline sidecar bytes for hash-stage cases.",
+  "type": "object",
+  "properties": {
+    "failure_id": {
+      "type": "string",
+      "pattern": "^NEG-[0-9]{3}$"
+    },
+    "stage": {
+      "enum": [
+        "format",
+        "hash",
+        "baseline"
+      ]
+    },
+    "expected_reason": {
+      "enum": [
+        "INVALID_UTF8",
+        "BOM_PRESENT",
+        "INVALID_JSON",
+        "MISSING_FINAL_LF",
+        "TRAILING_DATA",
+        "NON_CANONICAL_WHITESPACE",
+        "DUPLICATE_KEY",
+        "INVARIANT_REMOVED",
+        "MISSING_REQUIRED_FIELD",
+        "UNEXPECTED_FIELD",
+        "FIELD_ORDER_VIOLATION",
+        "TYPE_MISMATCH",
+        "HASH_FILE_MISSING",
+        "HASH_FORMAT_INVALID",
+        "HASH_MISMATCH",
+        "INTENT_MODIFIED",
+        "EVENT_MODIFIED",
+        "OBSERVE_MODIFIED",
+        "META_MODIFIED",
+        "INVARIANT_TYPE_CHANGED",
+        "INVARIANT_VALUE_CHANGED",
+        "NUMERIC_REPRESENTATION_CHANGE"
+      ]
+    },
+    "baseline": {
+      "const": "fixtures/baseline/baseline.json"
+    },
+    "record": {
+      "enum": [
+        "record.json",
+        "record.json.hex"
+      ]
+    },
+    "record_encoding": {
+      "enum": [
+        "raw",
+        "hex"
+      ]
+    },
+    "sidecar": {
+      "oneOf": [
+        {
+          "const": "record.json.sha256"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "record_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "mutation": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "enum": [
+            "record",
+            "sidecar"
+          ]
+        },
+        "operation": {
+          "enum": [
+            "insert",
+            "delete",
+            "replace",
+            "swap"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "target",
+        "operation",
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "failure_id",
+    "stage",
+    "expected_reason",
+    "baseline",
+    "record",
+    "record_encoding",
+    "sidecar",
+    "record_sha256",
+    "mutation"
+  ],
+  "additionalProperties": false
+}

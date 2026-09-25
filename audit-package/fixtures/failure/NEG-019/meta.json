@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-019",
+  "stage": "baseline",
+  "expected_reason": "INTENT_MODIFIED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "134d85e7b9100f140d610233fa4263d5784ef3f1b4819b61a2a86ed2fef9c514",
+  "mutation": {
+    "target": "record",
+    "operation": "swap",
+    "description": "Swap the order of intent.id and intent.action (same values, different key order)."
+  }
+}

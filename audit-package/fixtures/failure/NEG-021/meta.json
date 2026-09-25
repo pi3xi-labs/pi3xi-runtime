@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-021",
+  "stage": "baseline",
+  "expected_reason": "OBSERVE_MODIFIED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "c63c58083d5759a8cf484ebb5dec15fff4f1a4612896a523014bf9e730b7ff7e",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace observe.result \"Verified OK\" with \"rejected\"."
+  }
+}
