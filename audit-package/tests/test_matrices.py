@@ -1,13 +1,23 @@
 import ast
 import csv
+import re
 
 import pytest
 from conftest import PACKAGE_ROOT
 
 MATRICES = PACKAGE_ROOT / "matrices"
 NAMES = ["record-controls", "replay-controls", "invariant-controls", "hash-controls", "release-controls"]
-COLUMNS = ["ID", "Category", "Control", "Description", "ExpectedResult", "Owner", "Evidence",
-           "RiskLevel", "Status", "LastVerified", "TestRef"]
+COLUMNS = ["ID", "Category", "Control", "Description", "ExpectedResult", "ObservedResult", "Owner",
+           "Evidence", "RiskLevel", "Status", "LastVerified", "TestRef"]
+TEMPLATE = "audit-template"
+TEMPLATE_COLUMNS = ["ID", "Category", "Control", "Description", "ExpectedResult", "ObservedResult", "Owner",
+                    "Evidence", "RiskLevel", "Status", "LastVerified", "Notes"]
+TEMPLATE_IDS = ["A-01", "A-02", "A-03", "A-04", "B-01", "B-02", "C-01", "C-02", "D-01", "D-02",
+                "E-01", "E-02", "X-01", "X-02", "X-03", "X-04"]
+TEMPLATE_EXPECTED = {"PASS", "FAIL", "Not implemented"}
+# A CI evidence token: "CI run <numeric run id> @<commit sha, 7 to 40 hex>".
+CI_TOKEN = re.compile(r"^CI run [0-9]+ @[0-9a-f]{7,40}$")
+DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
 RISK = {"Critical", "High", "Medium", "Low"}
 STATUS = {"Planned", "Implemented", "Verified"}
 REPORTS = {"pytest.xml", "replay.log", "hash.log", "audit.log"}
@@ -32,7 +42,7 @@ def rows():
 
 
 def test_matrix_files_present():
-    assert sorted(p.stem for p in MATRICES.glob("*.csv")) == sorted(NAMES + ["compatibility-matrix"])
+    assert sorted(p.stem for p in MATRICES.glob("*.csv")) == sorted(NAMES + ["compatibility-matrix", TEMPLATE])
     assert (MATRICES / "README.md").is_file()
 
 
@@ -61,17 +71,72 @@ def test_matrix_allowed_values():
 def test_matrix_evidence_in_reports_list():
     for _, r in rows():
         ev = [e for e in r["Evidence"].split(";") if e]
-        assert set(ev) <= REPORTS, r["ID"]
-        if r["Status"] != "Planned":
-            assert ev, f"{r['ID']}: non-planned control needs evidence"
+        ci = [e for e in ev if CI_TOKEN.match(e)]
+        assert set(ev) - set(ci) <= REPORTS, r["ID"]
+        if r["Status"] == "Planned":
+            assert not ev, f"{r['ID']}: planned control must not claim evidence"
+        else:
+            assert set(ev) - set(ci), f"{r['ID']}: non-planned control needs a report name"
+        if r["Status"] != "Verified":
+            assert not ci, f"{r['ID']}: CI run evidence only belongs to Verified controls"
+
+
+def test_matrix_verified_requires_ci_evidence():
+    for _, r in rows():
+        if r["Status"] != "Verified":
+            continue
+        ev = [e for e in r["Evidence"].split(";") if e]
+        assert len([e for e in ev if CI_TOKEN.match(e)]) == 1, f"{r['ID']}: Verified needs one CI run token"
+        assert DATE.match(r["LastVerified"]), r["ID"]
+        assert r["ObservedResult"].startswith("PASS"), r["ID"]
+        assert r["TestRef"], f"{r['ID']}: Verified needs TestRef"
 
 
 def test_matrix_last_verified_rule():
     for _, r in rows():
         if r["Status"] != "Verified":
             assert r["LastVerified"] == "", r["ID"]
+            assert r["ObservedResult"] == "", r["ID"]
         else:
             assert r["LastVerified"], r["ID"]
+
+
+def test_matrix_release_manual_controls_stay_planned():
+    status = {r["ID"]: r["Status"] for _, r in rows()}
+    for i in ("REL-005", "REL-006", "REL-007", "REL-008"):
+        assert status[i] == "Planned", i
+
+
+def read_template():
+    header, *body = read(TEMPLATE)
+    return header, [dict(zip(header, r)) for r in body]
+
+
+def test_template_columns_and_ids():
+    header, body = read_template()
+    assert header == TEMPLATE_COLUMNS
+    assert [r["ID"] for r in body] == TEMPLATE_IDS
+    assert all(len(r) == len(TEMPLATE_COLUMNS) for r in body)
+
+
+def test_template_is_blank():
+    _, body = read_template()
+    for r in body:
+        assert r["ObservedResult"] == "" and r["Evidence"] == "" and r["LastVerified"] == "", r["ID"]
+        assert r["Status"] == "Planned", r["ID"]
+        assert r["ExpectedResult"] in TEMPLATE_EXPECTED, r["ID"]
+        assert r["RiskLevel"] in RISK, r["ID"]
+        assert all(r[c].strip() for c in ("Category", "Control", "Description", "Owner")), r["ID"]
+
+
+def test_template_absent_runtimes_not_implemented():
+    _, body = read_template()
+    by_id = {r["ID"]: r for r in body}
+    assert by_id["X-01"]["ExpectedResult"] == "PASS"
+    for i in ("X-02", "X-03", "X-04"):
+        assert by_id[i]["ExpectedResult"] == "Not implemented", i
+    for i in ("E-01", "E-02"):
+        assert by_id[i]["Owner"] == "Maintainer", i
 
 
 def test_matrix_critical_categories():

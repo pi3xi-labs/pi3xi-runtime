@@ -56,7 +56,8 @@ def test_audit_package_zip_is_deterministic(tmp_path):
         assert all((i.external_attr >> 16) & 0o777 == 0o644 for i in infos)
         for required in ("README.md", "rfc/RFC-AUDIT-001.md", "spec/canonical-serialization-v1.md",
                          "schemas/negative-fixture.schema.json", "matrices/compatibility-matrix.csv",
-                         "fixtures/vectors/vectors.json", "docs/responsibility-boundary.md", "reports/audit.log"):
+                         "fixtures/vectors/vectors.json", "docs/responsibility-boundary.md", "docs/topology.md",
+                         "rfc/RFC-INVARIANT-001.md", "matrices/audit-template.csv", "reports/audit.log"):
             assert required in names, required
         assert not any(n.startswith(("src/", "tests/", "tools/")) for n in names)
 
