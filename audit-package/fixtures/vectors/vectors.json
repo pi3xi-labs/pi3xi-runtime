@@ -1,0 +1,376 @@
+{
+  "generated_by": "tools/generate_test_vectors.py",
+  "spec": "spec/canonical-serialization-v1.md",
+  "note": "Index only. Payloads are the raw bytes of each 'file' (with a .sha256 sidecar); they are never embedded here. sha256 is computed from the file bytes and is independent of serialization rules. expected_accept / expected_reason / comparison results depend on the Spec v1 freeze and are provisional until then. Do not edit by hand.",
+  "vectors": [
+    {
+      "id": "TV-001",
+      "name": "empty-object",
+      "file": "TV-001.json",
+      "kind": "identity-only",
+      "length_bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-002",
+      "name": "value-int-1",
+      "file": "TV-002.json",
+      "kind": "identity-only",
+      "length_bytes": 12,
+      "sha256": "3a37782e8974c48eebf2a0517c866ad15641c53b3d31993188796b56aeb79624",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-003",
+      "name": "value-decimal-1.0",
+      "file": "TV-003.json",
+      "kind": "identity-only",
+      "length_bytes": 14,
+      "sha256": "4157e155c9158b65e7f45c225b3b9510c5a73618c306e534dc12d6ddb7fc89c7",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-004",
+      "name": "value-exponent-1e0",
+      "file": "TV-004.json",
+      "kind": "identity-only",
+      "length_bytes": 14,
+      "sha256": "29d1447ea663e282c504d5977da742359b799cbe6c3a0a2825cb59e84396cacc",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-005",
+      "name": "value-unicode-kansoku",
+      "file": "TV-005.json",
+      "kind": "identity-only",
+      "length_bytes": 19,
+      "sha256": "3ef9378760ac5f708a1983ca3c9be0337e5a2a23e70c1fcedff3705d7dd94679",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-006",
+      "name": "array-3-2-1",
+      "file": "TV-006.json",
+      "kind": "identity-only",
+      "length_bytes": 8,
+      "sha256": "731c9d7d39e36fc6439c278c686b28b94d7a46586ece4fa0e4916a858589a55e",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-007",
+      "name": "array-1-2-3",
+      "file": "TV-007.json",
+      "kind": "identity-only",
+      "length_bytes": 8,
+      "sha256": "9c6bc7ac937d2daffe5ecdbe7eb3a59aba4f43e96a58a99f08838d4ce48c92ba",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-008",
+      "name": "value-unicode-kansoku-escaped",
+      "file": "TV-008.json",
+      "kind": "identity-only",
+      "length_bytes": 25,
+      "sha256": "e19138e8b0b2d9cf04f530d491e3c9ab0aa023573c1eb9164dfcec63ac39170d",
+      "expected_accept": null,
+      "expected_reason": null,
+      "status": "not-applicable"
+    },
+    {
+      "id": "TV-101",
+      "name": "success-verify-success",
+      "file": "TV-101.json",
+      "kind": "canonical-record",
+      "length_bytes": 898,
+      "sha256": "4c71fb4ccb6090f45e6c6a6bb2dd63ed978ded507edee2b7a67c165b4ceacdf6",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-102",
+      "name": "success-verify-fail",
+      "file": "TV-102.json",
+      "kind": "canonical-record",
+      "length_bytes": 861,
+      "sha256": "652920357dad93d657a84d04c1c9b238f9c3fb1c7b537be88f2c47cb35653788",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-103",
+      "name": "success-replay-0002",
+      "file": "TV-103.json",
+      "kind": "canonical-record",
+      "length_bytes": 861,
+      "sha256": "63ac59593369570d1b1fa745e9e60f9efa6e96bf255e02cfcfdb36226152f9d5",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-104",
+      "name": "success-replay-0003-baseline",
+      "file": "TV-104.json",
+      "kind": "canonical-record",
+      "length_bytes": 903,
+      "sha256": "555fa8730836dcac92cdd0467d8ebdba5d2efc7d4b16e58f35f46b0bd1487999",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-105",
+      "name": "invariant-int-1",
+      "file": "TV-105.json",
+      "kind": "canonical-record",
+      "length_bytes": 870,
+      "sha256": "a999a86efb2568005ff2f027ff7deabd82e8e04bba5f05099d2556452ec85bd2",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-106",
+      "name": "invariant-decimal-1.0",
+      "file": "TV-106.json",
+      "kind": "canonical-record",
+      "length_bytes": 872,
+      "sha256": "26cd5e81d8c9044533d30e0e036ff095ba142505b476ad91de939feda936b613",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-107",
+      "name": "invariant-exponent-1e0",
+      "file": "TV-107.json",
+      "kind": "canonical-record",
+      "length_bytes": 872,
+      "sha256": "e9b5f7c4e44224d9c01e9cd7355c3f3f185894d4886a92d829b4145af1d800a9",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-108",
+      "name": "invariant-unicode-kansoku",
+      "file": "TV-108.json",
+      "kind": "canonical-record",
+      "length_bytes": 877,
+      "sha256": "2914edb5e05d3a46ff76704722c27f76fbc749badac4906f7a7a95cebaa59f37",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-109",
+      "name": "invariant-unicode-kansoku-escaped",
+      "file": "TV-109.json",
+      "kind": "canonical-record",
+      "length_bytes": 883,
+      "sha256": "dd2c56fa38d15e6039ee45e1f946ca33d51e826c62ca67b49c35505061d3cdbf",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-110",
+      "name": "invariant-null",
+      "file": "TV-110.json",
+      "kind": "canonical-record",
+      "length_bytes": 873,
+      "sha256": "a2b3ff1976767f1b2da1c534bde2ea9e7e889791bac8e9f4c7d0fe2f9e021432",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-111",
+      "name": "invariant-empty-object",
+      "file": "TV-111.json",
+      "kind": "canonical-record",
+      "length_bytes": 871,
+      "sha256": "1b171d0d14f7ab78321d7a890bfbeda7ad22dd5ec146a55f9ef8af21dc4d9a39",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-112",
+      "name": "invariant-empty-array",
+      "file": "TV-112.json",
+      "kind": "canonical-record",
+      "length_bytes": 871,
+      "sha256": "0cf2afabf4571d390f91ff366243c079351b7c84978fe158cd4fce1d4e0bf67c",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-113",
+      "name": "invariant-empty-string",
+      "file": "TV-113.json",
+      "kind": "canonical-record",
+      "length_bytes": 871,
+      "sha256": "282a23589213fb63eaf8d7519275ee95ca6fbef5b8f55b8e46cb9c4ad38c9c3a",
+      "expected_accept": true,
+      "expected_reason": null,
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-201",
+      "name": "bom-present",
+      "file": "TV-201.json",
+      "kind": "non-canonical",
+      "length_bytes": 906,
+      "sha256": "7179f0e1125e93727189fd63cd4674f749cd54b64868363de2093d0573d10e49",
+      "expected_accept": false,
+      "expected_reason": "BOM_PRESENT",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-202",
+      "name": "missing-final-lf",
+      "file": "TV-202.json",
+      "kind": "non-canonical",
+      "length_bytes": 902,
+      "sha256": "d5436465f293921113a7918296e9f3faec529e128558d15c305bd49160981cc1",
+      "expected_accept": false,
+      "expected_reason": "MISSING_FINAL_LF",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-203",
+      "name": "crlf-termination",
+      "file": "TV-203.json",
+      "kind": "non-canonical",
+      "length_bytes": 904,
+      "sha256": "eeb5a7228272049ad9bfde5406dd028b79ea0f07543379245671a8cbc94d4bd6",
+      "expected_accept": false,
+      "expected_reason": "TRAILING_DATA",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-204",
+      "name": "space-after-colon",
+      "file": "TV-204.json",
+      "kind": "non-canonical",
+      "length_bytes": 904,
+      "sha256": "034483217a8ffed5d8aec7d8a1f6f620cbf5fd1f7b46ec87cb2ebce5cc86eacb",
+      "expected_accept": false,
+      "expected_reason": "NON_CANONICAL_WHITESPACE",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-205",
+      "name": "duplicate-key",
+      "file": "TV-205.json",
+      "kind": "non-canonical",
+      "length_bytes": 916,
+      "sha256": "d8ba39927e69a270a195963c7be1da69ad79a9dcf20ceb9e4348bb14432a04e9",
+      "expected_accept": false,
+      "expected_reason": "DUPLICATE_KEY",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "id": "TV-206",
+      "name": "field-order-swapped",
+      "file": "TV-206.json",
+      "kind": "non-canonical",
+      "length_bytes": 903,
+      "sha256": "7ca0a1ce40c8dc0d05fa76a5a2f6e31b1f048ece9beaf3a994f6858de820144a",
+      "expected_accept": false,
+      "expected_reason": "FIELD_ORDER_VIOLATION",
+      "status": "provisional-until-spec-freeze"
+    }
+  ],
+  "comparisons": [
+    {
+      "reference": "TV-105",
+      "candidate": "TV-106",
+      "bytes_equal": false,
+      "expected_result": "NUMERIC_REPRESENTATION_CHANGE",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-105",
+      "candidate": "TV-107",
+      "bytes_equal": false,
+      "expected_result": "NUMERIC_REPRESENTATION_CHANGE",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-106",
+      "candidate": "TV-107",
+      "bytes_equal": false,
+      "expected_result": "NUMERIC_REPRESENTATION_CHANGE",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-105",
+      "candidate": "TV-108",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_TYPE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-108",
+      "candidate": "TV-109",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_VALUE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-110",
+      "candidate": "TV-111",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_TYPE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-111",
+      "candidate": "TV-112",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_TYPE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-113",
+      "candidate": "TV-110",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_TYPE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-104",
+      "candidate": "TV-111",
+      "bytes_equal": false,
+      "expected_result": "INVARIANT_VALUE_CHANGED",
+      "status": "provisional-until-spec-freeze"
+    },
+    {
+      "reference": "TV-104",
+      "candidate": "TV-104",
+      "bytes_equal": true,
+      "expected_result": null,
+      "status": "provisional-until-spec-freeze"
+    }
+  ]
+}
