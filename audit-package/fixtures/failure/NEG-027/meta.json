@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-027",
+  "stage": "baseline",
+  "expected_reason": "NUMERIC_REPRESENTATION_CHANGE",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "223d8b530aaad172415be312d06dbbeae73bc25f81ba2c8b1208c2df201b19ac",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace observe.outputs.exit_code 0 with 0.0."
+  }
+}

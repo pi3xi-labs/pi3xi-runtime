@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-022",
+  "stage": "baseline",
+  "expected_reason": "META_MODIFIED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "88b45c922100494f885113ca528592ad7d441c6275d4c6df3a8ee3424be09f37",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace meta.runtime_version example-0.0.0 with example-0.0.1."
+  }
+}

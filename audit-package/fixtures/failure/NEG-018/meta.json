@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-018",
+  "stage": "baseline",
+  "expected_reason": "INTENT_MODIFIED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "db7a4a32acefb3b97af5d82b8388f63e1cfd633bd863b6f9344fb76d2dfb4038",
+  "mutation": {
+    "target": "record",
+    "operation": "replace",
+    "description": "Replace intent.target contracts-v1.4.json with contracts-v1.3.json."
+  }
+}

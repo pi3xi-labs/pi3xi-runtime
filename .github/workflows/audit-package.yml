@@ -1,0 +1,78 @@
+name: audit-package
+
+on:
+  push:
+    paths:
+      - "audit-package/**"
+      - ".github/workflows/audit-package.yml"
+  pull_request:
+    paths:
+      - "audit-package/**"
+      - ".github/workflows/audit-package.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    defaults:
+      run:
+        working-directory: audit-package
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Regenerate fixtures and vectors (must be byte-identical)
+        run: |
+          set -euo pipefail
+          python tools/generate_success_fixtures.py
+          python tools/generate_negative_cases.py
+          python tools/generate_test_vectors.py
+          git diff --exit-code -- .
+          test -z "$(git status --porcelain -- .)"
+          echo "PASS: regenerated fixtures and vectors are identical to the committed files"
+
+      - name: Verify SHA-256 sidecars
+        run: python tools/verify_hashes.py
+
+      - name: Tests
+        run: python -m pytest --junitxml=reports/pytest.xml
+
+      - name: Audit
+        run: python tools/audit.py --reports-dir reports
+
+      - name: Build audit package ZIP (deterministic)
+        run: python tools/build_audit_package.py --out audit-package-v0.1.zip --reports-dir reports
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: audit-reports-py${{ matrix.python-version }}
+          path: audit-package/reports/
+          if-no-files-found: error
+
+      - name: Upload audit package
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: audit-package-v0.1-py${{ matrix.python-version }}
+          path: audit-package/audit-package-v0.1.zip
+          if-no-files-found: error
