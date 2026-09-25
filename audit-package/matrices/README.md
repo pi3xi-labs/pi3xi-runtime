@@ -97,3 +97,49 @@ Fill it in three steps:
 3. **Evidence.** Cite the evidence (`CI run <id> @<commit>` plus report names) and set `LastVerified`. Set `Status` to `Verified` only if the evidence is a passing CI run. A local run or a conversation is not enough.
 
 The committed file stays blank: ObservedResult, Evidence, and LastVerified are empty, and every Status is `Planned`. `tests/test_matrices.py` enforces this. Filled copies belong with the audit record of a release. They are not committed over the template.
+
+## Audit Readiness Checklist
+
+| Check | Status | Basis |
+|-------|--------|-------|
+| Audit scope documented | Yes | `README.md`, `docs/responsibility-boundary.md`, `rfc/RFC-AUDIT-001.md` |
+| Verification matrices present | Yes | 5 control CSVs, `compatibility-matrix.csv`, `audit-template.csv`; checked by `tests/test_matrices.py::test_matrix_files_present` |
+| Control-matrix statuses | Verified or Planned only (0 Implemented) | 29 Verified, 4 Planned. `Implemented` is still an allowed value (`tests/test_matrices.py`, `STATUS`) |
+| Evidence recorded for all Verified rows | Yes | Enforced by `tests/test_matrices.py::test_matrix_verified_requires_ci_evidence` |
+| CI run id recorded | Yes | `CI run 36130810196` in the `Evidence` column |
+| Commit SHA recorded | Yes | `@4691767` in the `Evidence` column (full SHA `46917671961a28800cb7aeb0a8aebffc72031254` above) |
+| Test artifact reference recorded | Yes | `pytest.xml` in the `Evidence` column (artifacts `audit-reports-py3.11`, `audit-reports-py3.12`) |
+| Python versions documented | Yes | 3.11 and 3.12 (`.github/workflows/audit-package.yml` matrix, `ObservedResult` column) |
+| Re-verification evidence | Yes | Run 36131874712 at commit `8249b62`: success on 3.11 and 3.12 |
+| Mermaid diagrams | Render locally; labels quoted | Rendered without errors with `@mermaid-js/mermaid-cli` on 2026-09-25. Quoting of labels with parentheses, `³` or `<br/>` is enforced by `tests/test_docs.py::test_mermaid_labels_quoted`. Rendering is not part of CI. |
+| Terminology | Documented | `docs/topology.md`: Provence is the Knowledge Governance layer (an intentional name, not "Provenance") |
+| License | CC0 1.0 Universal | Repository `LICENSE` is "Creative Commons Legal Code, CC0 1.0 Universal". It covers docs and code alike. A split between CC0 docs and MIT code is only an idea for the planned Bagua/Provence repositories and does not apply here. |
+| Planned items separated | Yes | REL-005 to REL-008; enforced by `tests/test_matrices.py::test_matrix_release_manual_controls_stay_planned` |
+| Change history recorded | Yes | "Change History" section below |
+
+## Final Audit Matrix Delta
+
+| Item | Value |
+|------|-------|
+| Controls changed | 29, from `Implemented` to `Verified`. The previous status was checked in git history: before commit `8249b62` all 29 were `Implemented`. |
+| Evidence run | `audit-package` run 36130810196 |
+| Evidence commit | `4691767` (`46917671961a28800cb7aeb0a8aebffc72031254`) |
+| Evidence run completed | 2026-09-25 20:42:19 JST (11:42:19 UTC) |
+| Python versions | 3.11, 3.12 |
+| Tests in evidence run | 249 passed, 0 failed, 0 skipped (both versions) |
+| Re-verification run | `audit-package` run 36131874712 at commit `8249b62` (`8249b629efd9831a91d18031601213cc2af8b0c6`), completed 2026-09-25 20:53:55 JST. Success on 3.11 and 3.12, with 259 tests (10 added in that commit). |
+| Still Planned | REL-005, REL-006, REL-007, REL-008 |
+| Column added | `ObservedResult` (five control matrices) |
+| File added | `audit-template.csv` |
+
+## Change History
+
+### 2026-09-25
+
+- 29 controls were updated from `Implemented` to `Verified` based on `audit-package` run 36130810196 (commit `4691767`, completed 20:42:19 JST, Python 3.11 and 3.12, 249 tests passed).
+- Subsequently re-verified by run 36131874712 (commit `8249b62`, completed 20:53:55 JST, 259 tests passed).
+- The `ObservedResult` column and `audit-template.csv` were added in the same change.
+
+## Audit Status Summary
+
+As of 2026-09-25, every control supported by automated CI evidence is marked `Verified`. REL-005 through REL-008 remain `Planned`. They are manual release steps and are excluded from current verification claims.
