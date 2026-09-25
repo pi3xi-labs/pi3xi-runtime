@@ -20,7 +20,9 @@ Byte-level fixity checks for Pi³XI Canonical Records defined by F.1 (`runtime-c
 ```
 audit-package/
   rfc/         RFC-AUDIT-001.md (Distributed Runtime Compatibility, Draft)
+               RFC-INVARIANT-001.md (Median Model Invariants, Draft, Governance)
   docs/        responsibility-boundary.md (F.1 / F.2 boundary, Mermaid diagram)
+               topology.md (layer topology and model independence, informative)
   spec/        canonical-serialization-v1.md, fixity-rules-v0.2.md, audit-model-v0.2.md,
                rejection-reasons.md, rejection-reasons.json (registry)
   schemas/     rejection-reason.schema.json, negative-fixture.schema.json
@@ -30,7 +32,7 @@ audit-package/
   fixtures/    success/ (4), baseline/ (1), failure/ (27 x NEG-XXX),
                vectors/ (27 raw TV-XXX.json + .sha256, vectors.json index)
   tests/       pytest suite
-  matrices/    5 control matrices + compatibility-matrix.csv + README.md
+  matrices/    5 control matrices + compatibility-matrix.csv + audit-template.csv + README.md
 ```
 
 ## Run Locally
