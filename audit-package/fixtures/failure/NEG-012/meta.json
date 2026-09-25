@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-012",
+  "stage": "format",
+  "expected_reason": "FIELD_ORDER_VIOLATION",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "7ca0a1ce40c8dc0d05fa76a5a2f6e31b1f048ece9beaf3a994f6858de820144a",
+  "mutation": {
+    "target": "record",
+    "operation": "swap",
+    "description": "Swap the top-level members intent and event."
+  }
+}

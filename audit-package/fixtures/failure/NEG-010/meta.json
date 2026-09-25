@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-010",
+  "stage": "format",
+  "expected_reason": "MISSING_REQUIRED_FIELD",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "b105e0e8c8220bcfd1d8c8d48665449e0f039e18362553e9f4be9148aeec174f",
+  "mutation": {
+    "target": "record",
+    "operation": "delete",
+    "description": "Delete the top-level member ,\"meta\":{...}."
+  }
+}

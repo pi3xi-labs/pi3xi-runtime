@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-011",
+  "stage": "format",
+  "expected_reason": "UNEXPECTED_FIELD",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "23463622298c400af7f12367017fa321d01ba5338dd32f37d7535cf9b7afc76f",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Insert a top-level member \"record_hash\" (hashes are kept outside records) before the final '}'."
+  }
+}

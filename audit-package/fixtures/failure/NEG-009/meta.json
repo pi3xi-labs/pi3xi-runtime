@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-009",
+  "stage": "format",
+  "expected_reason": "INVARIANT_REMOVED",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "8ecafb7afa585698872fbc6421142203eca251813eb460483450626b938db07b",
+  "mutation": {
+    "target": "record",
+    "operation": "delete",
+    "description": "Delete the top-level member ,\"invariant\":{...}."
+  }
+}

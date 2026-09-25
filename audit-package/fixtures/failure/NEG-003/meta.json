@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-003",
+  "stage": "format",
+  "expected_reason": "INVALID_JSON",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "fb10ba394b00096aa254482c9402f543aae4144813b7359f1e73ec1898ae7e50",
+  "mutation": {
+    "target": "record",
+    "operation": "delete",
+    "description": "Delete the final '}' that closes the top-level object."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-004",
+  "stage": "format",
+  "expected_reason": "MISSING_FINAL_LF",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "d5436465f293921113a7918296e9f3faec529e128558d15c305bd49160981cc1",
+  "mutation": {
+    "target": "record",
+    "operation": "delete",
+    "description": "Delete the terminating LF."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "failure_id": "NEG-002",
+  "stage": "format",
+  "expected_reason": "BOM_PRESENT",
+  "baseline": "fixtures/baseline/baseline.json",
+  "record": "record.json",
+  "record_encoding": "raw",
+  "sidecar": "record.json.sha256",
+  "record_sha256": "7179f0e1125e93727189fd63cd4674f749cd54b64868363de2093d0573d10e49",
+  "mutation": {
+    "target": "record",
+    "operation": "insert",
+    "description": "Prepend the UTF-8 BOM EF BB BF."
+  }
+}
