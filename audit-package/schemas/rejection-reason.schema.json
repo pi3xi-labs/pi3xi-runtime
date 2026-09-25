@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pi3xi-labs/pi3xi-runtime/audit-package/schemas/rejection-reason.schema.json",
+  "title": "Rejection Reason (F.2 Audit Package v0.1)",
+  "description": "One entry of the rejection reason registry (spec/rejection-reasons.json). The registry is an array of these entries, ordered by precedence (1 = highest priority).",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "enum": [
+        "INVALID_UTF8",
+        "BOM_PRESENT",
+        "INVALID_JSON",
+        "MISSING_FINAL_LF",
+        "TRAILING_DATA",
+        "NON_CANONICAL_WHITESPACE",
+        "DUPLICATE_KEY",
+        "INVARIANT_REMOVED",
+        "MISSING_REQUIRED_FIELD",
+        "UNEXPECTED_FIELD",
+        "FIELD_ORDER_VIOLATION",
+        "TYPE_MISMATCH",
+        "HASH_FILE_MISSING",
+        "HASH_FORMAT_INVALID",
+        "HASH_MISMATCH",
+        "INTENT_MODIFIED",
+        "EVENT_MODIFIED",
+        "OBSERVE_MODIFIED",
+        "META_MODIFIED",
+        "INVARIANT_TYPE_CHANGED",
+        "INVARIANT_VALUE_CHANGED",
+        "NUMERIC_REPRESENTATION_CHANGE",
+        "UNSUPPORTED_SCHEMA_VERSION"
+      ]
+    },
+    "precedence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stage": {
+      "enum": [
+        "format",
+        "hash",
+        "baseline",
+        "reserved"
+      ]
+    },
+    "category": {
+      "enum": [
+        "encoding",
+        "syntax",
+        "termination",
+        "whitespace",
+        "structure",
+        "invariant",
+        "integrity",
+        "modification",
+        "numeric",
+        "versioning"
+      ]
+    },
+    "status": {
+      "enum": [
+        "active",
+        "reserved"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "code",
+    "precedence",
+    "stage",
+    "category",
+    "status",
+    "description"
+  ],
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "status": {
+        "const": "reserved"
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "stage": {
+        "const": "reserved"
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "stage": {
+        "enum": [
+          "format",
+          "hash",
+          "baseline"
+        ]
+      }
+    }
+  }
+}
